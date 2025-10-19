@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import "./MonthSelector.css";
+interface MonthSelectorProps {
+    senddata: (month: string) => void; // غيّر النوع حسب ما ترسله فعلاً
+}
 
-function MonthSelector({ senddata }) {
-     const todayHijri_month = 
+function MonthSelector({ senddata }: MonthSelectorProps) {
+    const todayHijri_month =
         new Intl.DateTimeFormat("ar-SA-u-ca-islamic", {
             month: "long",
         }).format(new Date())
-    ;
+        ;
     const [selectedMonth, setSelectedMonth] = useState(todayHijri_month);
     const [isOpen, setIsOpen] = useState(false);
     const isfocus = useRef<HTMLUListElement>(null);
@@ -71,40 +74,38 @@ function MonthSelector({ senddata }) {
                         value={selectedMonth}
                     />
                     <div
-                        className={`dropdown-toggle ${
-                            isOpen ? "dropdown-toggle--open" : ""
-                        }`}
+                        className={`dropdown-toggle ${isOpen ? "dropdown-toggle--open" : ""
+                            }`}
                         onClick={() => {
                             setIsOpen((prev) => !prev);
                         }}
                     ></div>
                     <ul
-                    ref={isfocus}
-                    onBlur={onblurhandelr}
-                    className={`month-dropdown ${
-                        isOpen
-                            ? "month-dropdown--open"
-                            : "month-dropdown--closed"
-                    }`}
-                >
-                    {filteredMonths.map((month, index) => {
-                        return (
-                            <li
-                                className="month-item"
-                                key={index}
-                                onClick={() => {
-                                    setSelectedMonth(() => month);
-                                    setIsOpen(false);
-                                }}
-                            >
-                                {month}
-                            </li>
-                        );
-                    })}
-                </ul>
+                        ref={isfocus}
+                        onBlur={onblurhandelr}
+                        className={`month-dropdown ${isOpen
+                                ? "month-dropdown--open"
+                                : "month-dropdown--closed"
+                            }`}
+                    >
+                        {filteredMonths.map((month, index) => {
+                            return (
+                                <li
+                                    className="month-item"
+                                    key={index}
+                                    onClick={() => {
+                                        setSelectedMonth(() => month);
+                                        setIsOpen(false);
+                                    }}
+                                >
+                                    {month}
+                                </li>
+                            );
+                        })}
+                    </ul>
                 </div>
-                
-                <input className="button" type="button" value="تأكيد" onClick={()=>{senddata(selectedMonth)}} />
+
+                <input className="button" type="button" value="تأكيد" onClick={() => { senddata(selectedMonth) }} />
             </div>
         );
     }

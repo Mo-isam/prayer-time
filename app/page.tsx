@@ -2,64 +2,9 @@
 "use client";
 
 import Calendar from "./calendar";
-import { createContext, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import axios from "axios";
 import { MyDataContext, MyCalendarContext, Year, Timings } from "./context/PrayerContext";
-
-
-// interface year {
-//     data: month[][];
-// }
-
-// interface month {
-//     timings: timings;
-//     date: {
-//         hijri: hijri;
-//         gregorian: gregorian;
-//     };
-// }
-
-// interface hijri {
-//     date: string;
-//     day: number;
-//     month: {
-//         ar: string;
-//         days: number;
-//         en: string;
-//         number: number;
-//     };
-//     weekday: {
-//         ar: string;
-//         en: string;
-//     };
-// }
-// interface gregorian {
-//     date: string;
-//     day: string;
-//     month: {
-//         en: string;
-//         number: number;
-//     };
-//     weekday: {
-//         en: string;
-//     };
-// }
-// interface timings {
-//     Fajr: string;
-//     Sunrise: string;
-//     Dhuhr: string;
-//     Asr: string;
-//     Sunset: string;
-//     Maghrib: string;
-//     Isha: string;
-//     Imsak: string;
-//     Midnight: string;
-//     Firstthird: string;
-//     Lastthird: string;
-// }
-
-// export const mydata = createContext<timings | undefined>(undefined);
-// export const myCalendardata = createContext<year | undefined>(undefined);
 
 export default function Home() {
     const [prayerTimes, setPrayerTimes] = useState<Timings | undefined>();
