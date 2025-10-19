@@ -1,6 +1,7 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
-import { myCalendardata } from "./page";
+// import { myCalendardata } from "./page";
+import { MyCalendarContext } from "./context/PrayerContext";
 import styles from "./IslamicMonthsInput.module.css";
 import MonthSelector from "./MonthSelector";
 import Prayertime_display from "./prayertime-display";
@@ -28,7 +29,7 @@ function Name() {
             }).format(new Date())
         )
     );
-    const contex = useContext(myCalendardata);
+    const contex = useContext(MyCalendarContext);
 
     const [days, setdays] = useState<days[] | undefined>();
     // const monthref = useRef<HTMLSelectElement>(null);
