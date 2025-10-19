@@ -1,0 +1,126 @@
+/* IslamicMonthsInput.module.css */
+
+.calendarWrapper {
+    direction: rtl;
+    font-family: "Arial", sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.monthPickerContainer {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.monthPickerLabel {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.monthPickerSelect {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.monthPickerSelect:focus {
+    outline: none;
+    border-color: #4caf50;
+}
+
+.monthHeader {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 0;
+    border-radius: 5px;
+}
+
+.daysWrapper {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+}
+
+.singleDay {
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    border-color: transparent;
+
+}
+
+.singleDay:hover {
+    background-color: #eeeeee;
+}
+.today {
+    background-color: #e8f5e9;
+}
+.clicked {
+    border: 2px solid #4caf50;
+    transform: scale(1.06);
+    transition-duration: 100ms;
+    transition-property: border-color, transform;
+    transition-timing-function: ease-out; /* Optional: adds smoother easing */
+}
+.hijriDate {
+    color: #4caf50;
+    font-weight: bold;
+    margin: 0;
+}
+
+.gregorianDate {
+    color: #666;
+    font-size: 0.9em;
+    margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .calendarWrapper {
+        padding: 10px;
+    }
+
+    .singleDay {
+        height: 74px;
+        padding: 5px;
+        font-size: 0.8em;
+    }
+}
+@media (max-width: 400px) {
+    .calendarWrapper {
+        padding: 10px;
+    }
+
+    .singleDay {
+        line-height: 1.4;
+        /* max-height: 100px; */
+        height: 84px;
+        padding: 4px;
+        gap: 3px;
+        font-size: 0.8em;
+    }
+    .daysWrapper {
+        gap: 6px;
+    }
+}

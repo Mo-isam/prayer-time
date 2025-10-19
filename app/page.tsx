@@ -1,95 +1,131 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import Calendar from "./calendar";
+import { createContext, useEffect, useState } from "react";
+import axios from "axios";
+
+interface year {
+    data: month[][];
+}
+
+interface month {
+    timings: timings;
+    date: {
+        hijri: hijri;
+        gregorian: gregorian;
+    };
+}
+
+interface hijri {
+    date: string;
+    day: number;
+    month: {
+        ar: string;
+        days: number;
+        en: string;
+        number: number;
+    };
+    weekday: {
+        ar: string;
+        en: string;
+    };
+}
+interface gregorian {
+    date: string;
+    day: string;
+    month: {
+        en: string;
+        number: number;
+    };
+    weekday: {
+        en: string;
+    };
+}
+interface timings {
+    Fajr: string;
+    Sunrise: string;
+    Dhuhr: string;
+    Asr: string;
+    Sunset: string;
+    Maghrib: string;
+    Isha: string;
+    Imsak: string;
+    Midnight: string;
+    Firstthird: string;
+    Lastthird: string;
+}
+
+export const mydata = createContext<timings | undefined>(undefined);
+export const myCalendardata = createContext<year | undefined>(undefined);
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    // const [PrayerTimes, setPrayerTimes] = useState<timings | undefined>();
+    const [Year, setyear] = useState<year | undefined>();
+    // const axios = require("axios");
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+    // Make a request for a user with a given ID
+    useEffect(() => {
+        axios
+            .get(
+                "https://api.aladhan.com/v1/timingsByAddress?address=cairo,eg&method=8"
+            )
+            .then(function (response: any) {
+                // handle success
+                setPrayerTimes(response.data.data.timings);
+            })
+            .catch(function (error: any) {
+                // handle error
+
+                console.log(error);
+            })
+            .finally(function () {
+                // always executed
+            });
+    }, []);
+    useEffect(() => {
+        axios
+            .get(
+                "https://api.aladhan.com/v1/hijriCalendar/1447?latitude=30.0509245&longitude=+31.3336834&method=5&shafaq=general&tune=5%2C3%2C5%2C7%2C9%2C-1%2C0%2C8%2C-6&timezonestring=Africa%2FCairo&calendarMethod=HJCoSA%22%20%20-H%20%27accept:%20application/json"
+            )
+            .then(function (response: any) {
+                // handle success
+                setyear(response.data);
+                console.log(response);
+                
+            })
+            .catch(function (error: any) {
+                // handle error
+
+                console.log(error);
+            })
+            .finally(function () {
+                // always executed
+            });
+    }, []);
+
+    // useEffect(() => {
+    //     if (navigator.geolocation) {
+    //         navigator.geolocation.getCurrentPosition(
+    //             (position) => {
+    //                 const latitude = position.coords.latitude; // خط العرض
+    //                 const longitude = position.coords.longitude; // خط الطول
+    //                 console.log("latitude:", latitude,"longitude: ", longitude);
+    //             },
+    //             (error) => {
+    //                 console.error("خطأ في الحصول على الموقع:", error.message);
+    //             }
+    //         );
+    //     } else {
+    //         console.error("Geolocation غير مدعوم في هذا المتصفح.");
+    //     }
+    // }, []);
+    return (
+        <>
+            <div>
+                <myCalendardata.Provider value={Year}>
+                    <Calendar />
+                </myCalendardata.Provider>
+            </div>
+        </>
+    );
 }
